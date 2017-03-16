@@ -52,6 +52,38 @@ public class Main {
 			i++;
 		}
 	}
+	public static void getTeamTwo(){
+		temp = doc.select("td.red");
+		int i = 0;
+		int j = 0;
+		boolean bool = true;
+		for(Element teamList:temp){
+			if(i % 3 == 0) bool = !bool;
+			if(bool) {
+				if(j % 3 == 1){
+					arr.add(teamList.getElementsByTag("a").first().text());
+				}
+			}
+			j++;
+			i++;
+		}
+	}
+	public static void getTeamThree(){
+		temp = doc.select("td.red");
+		int i = 0;
+		int j = 0;
+		boolean bool = true;
+		for(Element teamList:temp){
+			if(i % 3 == 0) bool = !bool;
+			if(bool) {
+				if(j % 3 == 2){
+					arr.add(teamList.getElementsByTag("a").first().text());
+				}
+			}
+			j++;
+			i++;
+		}
+	}
 	
 	public static void getRedScore(){
 		temp = doc.select("td.redScore");
