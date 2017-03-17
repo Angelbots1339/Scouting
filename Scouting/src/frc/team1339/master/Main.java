@@ -12,15 +12,15 @@ import frc.team1339.quals.QualsMatch;
 
 public class Main {
 
-	static ArrayList<Object> teamNames = new ArrayList<Object>();
-	static ArrayList<Object> redOne = new ArrayList<Object>();
-	static ArrayList<Object> redTwo = new ArrayList<Object>();
-	static ArrayList<Object> redThree = new ArrayList<Object>();
-	static ArrayList<Object> blueOne = new ArrayList<Object>();
-	static ArrayList<Object> blueTwo = new ArrayList<Object>();
-	static ArrayList<Object> blueThree = new ArrayList<Object>();
-	static ArrayList<Object> redScore = new ArrayList<Object>();
-	static ArrayList<Object> blueScore = new ArrayList<Object>();
+	static ArrayList<String> teamNames = new ArrayList<String>();
+	static ArrayList<String> redOne = new ArrayList<String>();
+	static ArrayList<String> redTwo = new ArrayList<String>();
+	static ArrayList<String> redThree = new ArrayList<String>();
+	static ArrayList<String> blueOne = new ArrayList<String>();
+	static ArrayList<String> blueTwo = new ArrayList<String>();
+	static ArrayList<String> blueThree = new ArrayList<String>();
+	static ArrayList<String> redScore = new ArrayList<String>();
+	static ArrayList<String> blueScore = new ArrayList<String>();
 	static ArrayList<QualsMatch> quals = new ArrayList<QualsMatch>();
 	static Elements temp;
 	static Document doc;
@@ -43,6 +43,7 @@ public class Main {
 				System.out.println();
 			}
 		}
+		
 	}
 	
 	public static void generateQual(){
@@ -64,7 +65,7 @@ public class Main {
 	public static void getTeamNames(){
 		temp = doc.select("div.team-name");
 		for(Element teamList:temp){
-			teamNames.add(teamList.getElementsByTag("a").first().text());
+			teamNames.add(teamList.getElementsByTag("a").first().text().toString());
 		}
 	}
 	
@@ -77,7 +78,7 @@ public class Main {
 			if(i % 3 == 0) bool = !bool;
 			if(bool) {
 				if(j % 3 == 0){ //==1 for second, ==2 for third
-					redOne.add(teamList.getElementsByTag("a").first().text());
+					redOne.add(teamList.getElementsByTag("a").first().text().toString());
 				}
 			}
 			j++;
@@ -93,7 +94,7 @@ public class Main {
 			if(i % 3 == 0) bool = !bool;
 			if(bool) {
 				if(j % 3 == 1){
-					redTwo.add(teamList.getElementsByTag("a").first().text());
+					redTwo.add(teamList.getElementsByTag("a").first().text().toString());
 				}
 			}
 			j++;
@@ -110,7 +111,7 @@ public class Main {
 			if(i % 3 == 0) bool = !bool;
 			if(bool) {
 				if(j % 3 == 2){
-					redThree.add(teamList.getElementsByTag("a").first().text());
+					redThree.add(teamList.getElementsByTag("a").first().text().toString());
 				}
 			}
 			j++;
@@ -127,7 +128,7 @@ public class Main {
 			if(i % 3 == 0) bool = !bool;
 			if(bool) {
 				if(j % 3 == 0){ //==1 for second, ==2 for third
-					blueOne.add(teamList.getElementsByTag("a").first().text());
+					blueOne.add(teamList.getElementsByTag("a").first().text().toString());
 				}
 			}
 			j++;
@@ -144,7 +145,7 @@ public class Main {
 			if(i % 3 == 0) bool = !bool;
 			if(bool) {
 				if(j % 3 == 1){ //==1 for second, ==2 for third
-					blueTwo.add(teamList.getElementsByTag("a").first().text());
+					blueTwo.add(teamList.getElementsByTag("a").first().text().toString());
 				}
 			}
 			j++;
@@ -161,7 +162,7 @@ public class Main {
 			if(i % 3 == 0) bool = !bool;
 			if(bool) {
 				if(j % 3 == 2){ //==1 for second, ==2 for third
-					blueThree.add(teamList.getElementsByTag("a").first().text());
+					blueThree.add(teamList.getElementsByTag("a").first().text().toString());
 				}
 			}
 			j++;
@@ -173,7 +174,7 @@ public class Main {
 		int i = 0;
 		for(Element teamList:temp){
 			if(i % 2 == 1){
-				redScore.add(teamList.getElementsByTag("span").first().text());
+				redScore.add(teamList.getElementsByTag("span").first().text().toString());
 			}
 			i++;
 		}
@@ -184,9 +185,24 @@ public class Main {
 		int i = 0;
 		for(Element teamList:temp){
 			if(i % 2 == 1){
-				blueScore.add(teamList.getElementsByTag("span").first().text());
+				blueScore.add(teamList.getElementsByTag("span").first().text().toString());
 			}
 			i++;
 		}
+	}
+	
+	public static void averageScore(int teamNumber){
+		ArrayList<String> arr = new ArrayList<String>();
+		try {
+			Document doc2 = Jsoup.connect("https://www.thebluealliance.com/team/" + teamNumber + "/2017").userAgent("chrome/56.0.2924.87").get();
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
+		temp = doc.select("div.match-name");
+		for(Element teamList:temp){
+			arr.add(teamList.getElementsByTag("a").first().text().toString());
+		}
+		
 	}
 }
