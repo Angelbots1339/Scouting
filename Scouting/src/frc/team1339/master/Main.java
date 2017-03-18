@@ -33,6 +33,7 @@ public class Main {
 		catch(IOException e){
 			e.printStackTrace();
 		}
+		/*
 		generateQual();
 		for(int i = 0; i < 160; i++){
 			if(i % 2 == 0){
@@ -43,11 +44,12 @@ public class Main {
 				System.out.println();
 			}
 		}
+		*/
+		averageScore(1339);
 		
 	}
 	
 	public static void generateQual(){
-		getTeamNames();
 		getTeamOne();
 		getTeamTwo();
 		getTeamThree();
@@ -190,18 +192,50 @@ public class Main {
 			i++;
 		}
 	}
+	public static void getRedScore(int matchNum){
+		temp = doc.select("td.redScore");
+		int i = 0;
+		int score = (int) quals.get(matchNum - 1).getScore();
+	}
+	public static void getBlueScore(int matchNum){
+		temp = doc.select("td.blueScore");
+		int i = 0;
+		int score = (int) quals.get(matchNum - 1).getScore();
+	}
 	
 	public static void averageScore(int teamNumber){
-		ArrayList<String> arr = new ArrayList<String>();
+		ArrayList<Integer> arr = new ArrayList<Integer>();
+		Document doc2 = null;
 		try {
-			Document doc2 = Jsoup.connect("https://www.thebluealliance.com/team/" + teamNumber + "/2017").userAgent("chrome/56.0.2924.87").get();
+			doc2 = Jsoup.connect("https://www.thebluealliance.com/team/" + teamNumber + "/2017").userAgent("chrome/56.0.2924.87").get();
 		}
 		catch(IOException e){
 			e.printStackTrace();
 		}
-		temp = doc.select("div.match-name");
+		temp = doc2.getElementsByClass("redScore current-team");
+		int i = 0;
+		/*
 		for(Element teamList:temp){
-			arr.add(teamList.getElementsByTag("a").first().text().toString());
+			if(i % 2 == 0){
+				String match = teamList.getElementsByTag("a").first().text().toString();
+				if(match.length() < 9){
+					if(match.substring(0, 1).equalsIgnoreCase("q")){
+						arr.add(Integer.parseInt(match.substring(match.lastIndexOf(" ") + 1)));
+						System.out.println(Integer.parseInt(match.substring(match.lastIndexOf(" ") + 1)));
+					}
+				}
+			}
+			i++;
+		}
+		*/
+		for(Element teamList:temp){
+			
+			if(i % 2 == 0){
+				String score = teamList.getElementsByTag("span").first().text().toString();
+				arr.add(Integer.parseInt(score));
+				System.out.println(Integer.parseInt(score));
+			}
+			i++;
 		}
 		
 	}
